@@ -4,6 +4,7 @@
 [![Python 3.13+](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/TavoloPerUno/py_urn_randomizer/actions/workflows/lint.yml/badge.svg)](https://github.com/TavoloPerUno/py_urn_randomizer/actions/workflows/lint.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-informational.svg)](https://tavoloperuno.github.io/py_urn_randomizer/)
+[![Live Demo](https://img.shields.io/badge/demo-Live%20on%20Render-success.svg)](https://py-urn-randomizer.onrender.com)
 
 A clinical trial urn randomization system implementing the adaptive biased coin
 design described by Wei (1978). The system ensures treatment-group balance
