@@ -1,31 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Urn body - classical vase shape -->
-  <path d="M180 360 Q180 400 200 420 L312 420 Q332 400 332 360 L340 280 Q342 240 320 220 L310 210 Q340 190 340 160 L340 150 Q340 130 320 130 L192 130 Q172 130 172 150 L172 160 Q172 190 202 210 L192 220 Q170 240 172 280 Z"
-        fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round"/>
+  <!-- White circle background for contrast on dark navbar -->
+  <circle cx="256" cy="256" r="240" fill="#ffffff"/>
+
+  <!-- Simplified urn body - bold and readable at small sizes -->
+  <path d="M195 350 Q195 385 215 405 L297 405 Q317 385 317 350 L323 275 Q325 245 308 228 L300 220 Q325 200 325 175 L325 165 Q325 150 310 150 L202 150 Q187 150 187 165 L187 175 Q187 200 212 220 L204 228 Q187 245 189 275 Z"
+        fill="#800000"/>
 
   <!-- Urn rim -->
-  <rect x="170" y="120" width="172" height="16" rx="4" fill="#ffffff"/>
+  <rect x="183" y="140" width="146" height="16" rx="4" fill="#800000"/>
 
   <!-- Urn base -->
-  <rect x="200" y="420" width="112" height="12" rx="4" fill="#ffffff"/>
-  <rect x="216" y="432" width="80" height="10" rx="3" fill="#ffffff"/>
+  <rect x="212" y="405" width="88" height="11" rx="4" fill="#800000"/>
+  <rect x="224" y="416" width="64" height="9" rx="3" fill="#800000"/>
 
-  <!-- Colored balls inside the urn -->
-  <circle cx="230" cy="340" r="22" fill="#7EBEC5"/>
-  <circle cx="282" cy="340" r="22" fill="#fcb900"/>
-  <circle cx="256" cy="300" r="22" fill="#7EBEC5"/>
-  <circle cx="220" cy="290" r="18" fill="#fcb900" opacity="0.85"/>
-  <circle cx="290" cy="295" r="18" fill="#ffffff" opacity="0.5"/>
+  <!-- Colored balls inside -->
+  <circle cx="236" cy="335" r="20" fill="#7EBEC5"/>
+  <circle cx="276" cy="335" r="20" fill="#fcb900"/>
+  <circle cx="256" cy="298" r="20" fill="#7EBEC5"/>
 
-  <!-- Ball being drawn out (above urn) -->
-  <circle cx="256" cy="70" r="18" fill="#7EBEC5"/>
+  <!-- Ball being drawn out -->
+  <circle cx="256" cy="95" r="18" fill="#7EBEC5"/>
 
   <!-- Dashed line -->
-  <path d="M256 95 L256 118" stroke="#ffffff" stroke-width="3" stroke-dasharray="4,3"/>
-
-  <!-- Shine -->
-  <circle cx="224" cy="333" r="5" fill="#ffffff" opacity="0.3"/>
-  <circle cx="276" cy="333" r="5" fill="#ffffff" opacity="0.3"/>
-  <circle cx="250" cy="293" r="5" fill="#ffffff" opacity="0.3"/>
-  <circle cx="250" cy="63" r="4" fill="#ffffff" opacity="0.3"/>
+  <path d="M256 118 L256 138" stroke="#800000" stroke-width="4" stroke-dasharray="5,3"/>
 </svg>
