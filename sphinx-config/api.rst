@@ -79,10 +79,13 @@ Randomize a Participant
      "message": "Success",
      "results": [{
        "id": "P026",
+       "f_age_group": "18-40",
+       "f_sex": "Female",
+       "f_disease_severity": "Mild",
+       "f_prior_treatment": "No",
        "trt": "Treatment A",
-       "age_group": "18-40",
-       "sex": "Female",
-       "disease_severity": "Mild"
+       "datetime": "2025-09-15 14:30:00",
+       "user": "alice"
      }],
      "status": 200
    }
