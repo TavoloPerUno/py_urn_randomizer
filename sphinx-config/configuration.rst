@@ -112,15 +112,18 @@ The urn randomization scheme (Wei, 1978) maintains a set of urns — one per
 stratum defined by the combination of factor levels. Each urn contains colored
 balls representing treatment arms.
 
-1. When a new participant arrives, their factor levels determine which urn is
-   selected.
-2. A ball is drawn from the urn. Its color determines the treatment assignment.
-3. The urn composition is updated: ``alpha`` balls of the assigned treatment
+1. When a new participant arrives, their factor levels are matched to urns —
+   one urn per factor-level combination.
+2. An imbalance score *d* is computed for each matched urn using the configured
+   measure (``D``).
+3. The urn with the highest imbalance is selected (``urn_selection`` method).
+4. A ball is drawn from that urn. Its color determines the treatment assignment.
+5. The urn composition is updated: ``alpha`` balls of the assigned treatment
    and ``beta`` balls of each unassigned treatment are added back.
 
-This adaptive mechanism naturally corrects imbalances: as one treatment
-accumulates more assignments, the urn shifts probability toward the
-underrepresented arms.
+This adaptive mechanism naturally corrects imbalances: the most imbalanced
+stratum drives the assignment, shifting probability toward underrepresented
+arms across all relevant factor levels.
 
 .. tip::
 

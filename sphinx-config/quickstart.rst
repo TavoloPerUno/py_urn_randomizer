@@ -4,7 +4,7 @@ Quick Start
 Prerequisites
 -------------
 
-- Python 3.12 or later
+- Python 3.13 or later
 - A Google OAuth 2.0 client ID and secret (for authentication)
 
 Installation
@@ -46,8 +46,8 @@ Initialize the database and create your first user:
    flask createdb
    flask add_user admin admin@example.com
 
-The ``add_user`` command prints an API key for the new user. Store this
-securely — it is required for REST API access.
+The ``add_user`` command creates a user with an auto-generated API key. To
+retrieve the key, run ``flask list_users``.
 
 Running the Server
 ------------------
@@ -77,6 +77,8 @@ Alternatively, use the CLI:
 .. code-block:: bash
 
    urn -s "My Study" randomize --id P001 --user admin
+
+The command will interactively prompt for each factor level.
 
 Or the REST API:
 

@@ -9,7 +9,7 @@ Changelog
 - Demo mode for public demonstrations (bypasses OAuth)
 - Logo, favicon, and UChicago color theme
 - Sphinx documentation on GitHub Pages
-- GitHub Actions CI (lint, test, deploy docs)
+- GitHub Actions CI (lint, deploy docs)
 - Deployment support for Render
 
 0.9 (2021)
