@@ -1,0 +1,23 @@
+/* UChicago maroon accent overrides for Furo theme */
+
+/* Admonition styling */
+.admonition.tip {
+    border-color: #7EBEC5;
+}
+
+/* Screenshot images - constrain width */
+.figure img, figure img {
+    max-width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+/* Config table styling */
+table.docutils td, table.docutils th {
+    padding: 8px 12px;
+}
+
+/* Code block styling */
+.highlight pre {
+    border-radius: 6px;
+}

@@ -1,16 +1,87 @@
-.. urn-randomization documentation master file, created by
-   sphinx-quickstart on Mon Mar 29 23:34:53 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Urn Randomizer
+==============
 
-Urn Randomization
-=================
+A clinical trial urn randomization system implementing the adaptive biased coin
+design described by `Wei (1978) <https://doi.org/10.1214/aos/1176344068>`_.
+The system ensures treatment-group balance according to one or more prognostic
+factors and exposes its functionality through a **Flask web GUI**, a **REST API**,
+and a **command-line interface**.
+
+.. image:: figures/screenshot_dashboard.png
+   :alt: Dashboard screenshot
+   :align: center
+   :width: 80%
+
+|
+
+.. grid:: 2
+   :gutter: 3
+
+   .. grid-item-card:: Getting Started
+      :link: quickstart
+      :link-type: doc
+
+      Install the package, configure a study, and run your first randomization.
+
+   .. grid-item-card:: Web Dashboard
+      :link: overview
+      :link-type: doc
+
+      Monitor enrollment progress, treatment balance, and assignment history
+      through the interactive web interface.
+
+   .. grid-item-card:: REST API
+      :link: api
+      :link-type: doc
+
+      Integrate randomization into existing platforms using the HTTP API.
+
+   .. grid-item-card:: CLI Reference
+      :link: cli
+      :link-type: doc
+
+      Manage users, randomize participants, and export data from the terminal.
+
+
+Key Features
+------------
+
+- **Urn randomization** per Wei (1978) adaptive biased coin design
+- **Interactive dashboard** with enrollment progress, Bokeh charts, and data export
+- **REST API** with API-key authentication for programmatic access
+- **CLI** for scripting and batch operations
+- **Plugin system** for custom assignment logic
+- **Reproducible RNG** via NumPy PCG64 generator
+- **SQLite storage** for portable, zero-configuration persistence
+
+.. tip::
+
+   Try the `live demo <https://py-urn-randomizer.onrender.com>`_ — no login
+   required. The demo is pre-seeded with 25 participants across three treatment
+   arms.
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: User Guide
+   :hidden:
 
+   quickstart
    overview
-   cli
-   api
+   configuration
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Reference
+   :hidden:
+
+   api
+   cli
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Project
+   :hidden:
+
+   deployment
+   changelog
