@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -e .
           pip install sphinx sphinx-rtd-theme sphinxcontrib-httpdomain sphinx-click sphinx-autoapi rinohtype
 
       - name: Build Sphinx docs
@@ -38,6 +38,8 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
