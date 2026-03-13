@@ -10,15 +10,16 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import os
 import sys
 
-sys.path.insert(0, "../")
+sys.path.insert(0, os.path.abspath("../"))
 
 
 # -- Project information -----------------------------------------------------
 
-project = "urn-randomization"
-copyright = "2021, Research Computing Group, University of Chicago"
+project = "py_urn_randomizer"
+copyright = "2021-2026, Research Computing Group, University of Chicago"
 author = "Research Computing Group, University of Chicago"
 
 # The full version, including alpha/beta/rc tags

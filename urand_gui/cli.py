@@ -1,10 +1,12 @@
-import click
 import secrets
+
+import click
 import pandas as pd
-from sqlalchemy.orm.exc import NoResultFound
 from flask.cli import with_appcontext
-from urand_gui.models import db, User, Study
+from sqlalchemy.orm.exc import NoResultFound
+
 from urand_gui import urand_config
+from urand_gui.models import Study, User, db
 
 
 @click.command(name="createdb")

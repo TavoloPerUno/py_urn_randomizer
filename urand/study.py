@@ -1,16 +1,15 @@
 """Urn randomization for group assignment in randomized experiments"""
 
-from urand import db
-from urand import config
-import json
-import random
-from numpy.random import Generator, PCG64
-from itertools import product
-from datetime import datetime, timezone
 import ast
+import json
+from datetime import datetime, timezone
+from itertools import product
+
 import pandas as pd
 import scipy.stats as stats
-import sys
+from numpy.random import PCG64, Generator
+
+from urand import config, db
 
 plugins = config.plugins
 
@@ -19,7 +18,6 @@ class Study:
     """Study for which treatments are to be assigned"""
 
     def __init__(self, study_name, memory=False):
-
         self.study_name = study_name
         config, self.participant, self.session = db.get_tables(study_name, memory)
 
@@ -167,11 +165,6 @@ class Study:
                 d=(urns[ball_cols].div(urns["total_balls"], axis=0).var(axis=1))
             )
         else:
-            trt_cols = ["trt_" + t for t in self.treatments]
-            # urns['total_asgmt'] = urns[trt_cols].sum(axis=1)
-            # urns = urns.assign(d=urns['total_asgmt'].where(urns['total_asgmt'] == 0,
-            #                                                stats.chisquare(urns[trt_cols], axis=1)[0]))
-            # del urns['total_asgmt']
             urns = urns.assign(
                 d=stats.chisquare(
                     urns[ball_cols].div(urns["total_balls"], axis=0), axis=1
@@ -218,9 +211,7 @@ class Study:
         pdf_asgmt = (
             kwargs["pdf"]
             if ("pdf" in kwargs)
-            else pd.read_csv(
-                kwargs["file"], dtype=object, encoding="utf8"
-            )
+            else pd.read_csv(kwargs["file"], dtype=object, encoding="utf8")
         )
         assert all(
             [
@@ -264,7 +255,6 @@ class Study:
 
     # TODO: get study status - multiple studies, npatients, print urn assignments
     def upload_new_participants(self, **dct_participants):
-
         assert ("file" in dct_participants) | (
             "pdf" in dct_participants
         ), "Neither filename nor dataframe eith patient info provided as input"
@@ -351,7 +341,7 @@ class Study:
             .values.flatten()
             .tolist(),
         )[0]
-        participant.trt = trt.lstrip("balls_trt_")
+        participant.trt = trt[len("balls_trt_") :]
 
         for plugin_name in plugins.list_plugins():
             plugin = plugins.load_plugin(plugin_name)

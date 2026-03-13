@@ -1,1 +1,1 @@
-from .study import Study
+from .study import Study  # noqa: F401

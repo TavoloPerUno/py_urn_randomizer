@@ -1,31 +1,18 @@
 # -*- coding: utf-8 -*-
-from flask import (
-    flash,
-    redirect,
-    url_for,
-    render_template,
-    request,
-    jsonify,
-    render_template,
-    request,
-    Response,
-)
-from flask_wtf import CSRFProtect
-from flask_login import login_required, logout_user, current_user
-
-
-from datatables import ColumnDT, DataTables
-
-from flask_bootstrap import Bootstrap
-
 import pandas as pd
+from datatables import ColumnDT, DataTables
+from flask import flash, jsonify, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, logout_user
+from flask_wtf import CSRFProtect
+
 import urand_gui.forms as urand_forms
 import urand_gui.plots as plot_utils
+from urand_gui import Study, app, login_manager, study
+from urand_gui import urand_config as config
 from urand_gui.models import User
 
-from urand_gui import study, Study, app, login_manager, urand_config as config
-
-# app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'  # uncomment this line to test bootswatch theme
+# uncomment to test bootswatch theme:
+# app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'
 
 csrf = CSRFProtect(app)
 
@@ -79,7 +66,7 @@ def unauthorized():
 @app.route("/randomize_participant", methods=["GET", "POST"])
 @login_required
 def randomize_participant():
-    """This function renders Randomize Participant form with which the end user can randomize new participants"""
+    """Render Randomize Participant form."""
     form = urand_forms.FrmRandomizeParticipant(user=current_user.username)
     if form.validate_on_submit():
         participant = study.participant()
@@ -214,10 +201,10 @@ def api_get_participants():
             status = 404
             dct_data["message"] = "Requested study does not exist."
         else:
-            study = Study(request.args.get("study"))
-            df_participants = study.export_history()
+            req_study = Study(request.args.get("study"))
+            df_participants = req_study.export_history()
             dct_data["message"] = "Success"
-            dct_data["results"] = df_participants.to_dict(orient="record")
+            dct_data["results"] = df_participants.to_dict(orient="records")
         dct_data["status"] = status
         return jsonify(dct_data), status
     else:
@@ -341,39 +328,39 @@ def api_randomize_participant():
                     "message"
                 ] = "Please pass the participant id with your request."
             if status == 200:
-                study = Study(request.args.get("study"))
-                lst_factors = list(study.factors.keys())
+                req_study = Study(request.args.get("study"))
+                lst_factors = list(req_study.factors.keys())
                 for factor in lst_factors:
                     if factor not in request.args:
                         status = 400
-                        dct_data[
-                            "message"
-                        ] = "Please pass a value for factor {0} with your request.".format(
-                            factor
+                        dct_data["message"] = (
+                            "Please pass a value for factor "
+                            "{} with your request.".format(factor)
                         )
                         break
-                    if request.args.get(factor) not in study.factors[factor]:
+                    if request.args.get(factor) not in req_study.factors[factor]:
                         status = 400
                         dct_data["message"] = (
-                            "Invalid level supplied for factor {0}. "
-                            + "Allowed level are: [{1}].".format(
-                                factor, ", ".join(study.factors[factor])
+                            "Invalid level supplied for factor {}. "
+                            "Allowed levels are: [{}].".format(
+                                factor,
+                                ", ".join(req_study.factors[factor]),
                             )
                         )
                         break
 
-                if study.get_participant(request.args.get("id")).shape[0] > 0:
+            if status == 200:
+                pid = request.args.get("id")
+                if req_study.get_participant(pid).shape[0] > 0:
                     status = 400
-                    dct_data[
-                        "message"
-                    ] = f"Participant {request.args.get('id')} is already assigned"
-                    df_participant = study.get_participant(request.args.get("id"))
-                    dct_data["results"] = df_participant.to_dict(orient="record")
+                    dct_data["message"] = f"Participant {pid} is already assigned"
+                    df_participant = req_study.get_participant(pid)
+                    dct_data["results"] = df_participant.to_dict(orient="records")
                 else:
                     df_participant = pd.DataFrame(
                         dict(
                             [
-                                ("id", request.args.get("id")),
+                                ("id", pid),
                                 ("user", current_user.username),
                             ]
                             + [
@@ -383,10 +370,10 @@ def api_randomize_participant():
                         ),
                         index=[0],
                     )
-                    study.upload_new_participants(pdf=df_participant)
-                    df_participant = study.get_participant(request.args.get("id"))
+                    req_study.upload_new_participants(pdf=df_participant)
+                    df_participant = req_study.get_participant(pid)
                     dct_data["message"] = "Success"
-                    dct_data["results"] = df_participant.to_dict(orient="record")
+                    dct_data["results"] = df_participant.to_dict(orient="records")
         dct_data["status"] = status
         return jsonify(dct_data), status
     else:
@@ -519,10 +506,10 @@ def api_get_config():
             status = 404
             dct_data["message"] = "Requested study does not exist."
         else:
-            study = Study(request.args.get("study"))
+            req_study = Study(request.args.get("study"))
             dct_data["message"] = "Success"
             dct_data["user"] = current_user.username
-            dct_data["results"] = study.get_config()
+            dct_data["results"] = req_study.get_config()
 
         dct_data["status"] = status
         return jsonify(dct_data), status

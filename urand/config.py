@@ -1,8 +1,8 @@
 """Utilities shared across modules"""
 
-import confuse
 import os
 
+import confuse
 from pluginbase import PluginBase
 
 root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))

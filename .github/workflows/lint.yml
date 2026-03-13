@@ -1,0 +1,33 @@
+name: Lint and Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Check formatting with black
+        run: black --check urand/ urand_gui/ plugins/ tests/
+
+      - name: Check import order with isort
+        run: isort --check urand/ urand_gui/ plugins/ tests/
+
+      - name: Lint with flake8
+        run: flake8 urand/ urand_gui/ plugins/ tests/
+
+      - name: Run tests
+        run: pytest tests/

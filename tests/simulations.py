@@ -1,13 +1,15 @@
-from urand import Study, db
-import os
-import numpy as np
-from numpy.random import Generator, PCG64
-import pandas as pd
-import glob
-import shutil
-import urand
 import ast
+import glob
+import os
+import shutil
 from multiprocessing import Pool
+
+import numpy as np
+import pandas as pd
+from numpy.random import PCG64, Generator
+
+import urand
+from urand import Study
 
 
 def simulate_assignments(
@@ -208,9 +210,7 @@ def estimate_study_imbalance(simulation_label, study_name="Test Study"):
         study.starting_seed = pdf_trial["starting_seed"].values[0]
 
         for n_participants in range(1, max_participants + 1):
-            pdf_trial_n = pdf_trial.iloc[
-                :n_participants,
-            ]
+            pdf_trial_n = pdf_trial.iloc[:n_participants,]
 
             study.upload_existing_history(
                 pdf=pdf_trial_n[

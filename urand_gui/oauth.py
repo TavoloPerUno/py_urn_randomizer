@@ -1,11 +1,13 @@
+import secrets
+
 from flask import flash
-from flask_login import current_user, login_user
-from flask_dance.contrib.google import make_google_blueprint
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
+from flask_dance.contrib.google import make_google_blueprint
+from flask_login import current_user, login_user
 from sqlalchemy.orm.exc import NoResultFound
-import secrets
-from .models import db, User, OAuth
+
+from .models import OAuth, User, db
 
 blueprint = make_google_blueprint(
     scope=["profile", "email"],

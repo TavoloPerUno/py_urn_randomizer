@@ -1,0 +1,17 @@
+db: sqlite:///demo.db
+
+"Demo Study":
+    starting_seed: 42
+    treatments:
+        - Drug A
+        - Drug B
+        - Placebo
+    factors:
+        age_group:
+            ["18-40", "41-65", "65+"]
+        sex:
+            ["Male", "Female"]
+        disease_severity:
+            ["Mild", "Moderate", "Severe"]
+        prior_treatment:
+            ["Yes", "No"]

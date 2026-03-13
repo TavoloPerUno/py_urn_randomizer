@@ -1,16 +1,9 @@
-from wtforms.fields import SubmitField, StringField
-
-from sqlalchemy import Table, Column, String, Enum
-from wtforms_alchemy import ClassMap
-from flask_wtf import Form
-from wtforms.validators import Optional
-
-from urand import db
 from collections import OrderedDict
 
-from urand_gui import study, ModelForm
+from wtforms.fields import StringField, SubmitField
+from wtforms.validators import InputRequired, Optional
 
-from wtforms.validators import Optional, InputRequired
+from urand_gui import ModelForm, study
 
 
 class OptionalIfDisabled(Optional):

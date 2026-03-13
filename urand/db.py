@@ -1,18 +1,31 @@
 """Utilities for interacting with SQLite DB containing study information"""
 
-from urand.config import config
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy import Table, Column, String, Enum, DateTime, JSON, or_
+import json
+import re
+
+import pandas as pd
+from confuse import NotFoundError
+from sqlalchemy import (
+    JSON,
+    Column,
+    DateTime,
+    Enum,
+    MetaData,
+    String,
+    Table,
+    create_engine,
+    or_,
+)
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import null
-from confuse import NotFoundError
-import json
-import re
-import pandas as pd
 
-clean = lambda s: re.sub(r"\W|^(?=\d)", "_", s)
+from urand.config import config
+
+
+def clean(s):
+    return re.sub(r"\W|^(?=\d)", "_", s)
 
 
 def config_table(engine, metadata, study_name):
@@ -207,10 +220,10 @@ def get_last_state(participant_tbl, session):
 def get_participants(participant_tbl, session, **factor_levels):
     """Get existing participants, optionally filtered by factor levels"""
 
-    filter = [
+    filter_conditions = [
         getattr(participant_tbl, attr) == value for attr, value in factor_levels.items()
     ]
-    query = session.query(participant_tbl).filter(or_(*filter))
+    query = session.query(participant_tbl).filter(or_(*filter_conditions))
     df = pd.read_sql(query.statement, session.bind)
     return df
 

@@ -1,24 +1,21 @@
-from bokeh.embed import components
-from bokeh.models import (
-    ColumnDataSource,
-    Paragraph,
-    Legend,
-    CDSView,
-    GroupFilter,
-    IndexFilter,
-    Select,
-    HoverTool,
-    FactorRange,
-    PrintfTickFormatter,
-)
-from bokeh.plotting import figure
-from bokeh.layouts import column, row
-from bokeh.resources import INLINE
-from bokeh.transform import factor_cmap
-from bokeh.core.properties import value
-from bokeh.palettes import Dark2_5 as bokeh_palette
-from bokeh.models.callbacks import CustomJS
 import itertools
+
+from bokeh.embed import components
+from bokeh.layouts import column, row
+from bokeh.models import (
+    CDSView,
+    ColumnDataSource,
+    FactorRange,
+    GroupFilter,
+    HoverTool,
+    Legend,
+    Paragraph,
+    Select,
+)
+from bokeh.models.callbacks import CustomJS
+from bokeh.palettes import Dark2_5 as bokeh_palette
+from bokeh.plotting import figure
+from bokeh.resources import INLINE
 
 palette = ["#ba32a0", "#f85479", "#f8c260", "#00c2ba"]
 
@@ -188,11 +185,11 @@ def plt_factor_treatment_assignments(study):
             select=select_factor, src=src, filter=filter, factors=study.factors, plot=p
         ),
         code="""
-		  filter.group = select.value
-		  filter.change.emit()
-		  src.change.emit()
-		  plot.x_range.factors = factors[select.value]
-		""",
+          filter.group = select.value
+          filter.change.emit()
+          src.change.emit()
+          plot.x_range.factors = factors[select.value]
+        """,
     )
 
     select_factor.js_on_change("value", callback)

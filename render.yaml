@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: py-urn-randomizer-demo
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn urand_gui.app:app
+    envVars:
+      - key: DEMO_MODE
+        value: "true"
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: URAND_STUDY_NAME
+        value: "Demo Study"
+      - key: URAND_CONFIG_FILE
+        value: config-demo.yaml

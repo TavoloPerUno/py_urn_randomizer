@@ -1,0 +1,16 @@
+# Note: flake8 does not support pyproject.toml natively.
+# Configure flake8 in setup.cfg or .flake8 instead.
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint."messages control"]
+max-line-length = 88
+disable = ["C0114", "C0115", "C0116", "R0903", "R0913", "W0622"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

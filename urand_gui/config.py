@@ -1,5 +1,4 @@
 import os
-import base64
 
 
 class Config(object):
@@ -9,3 +8,4 @@ class Config(object):
     BOOTSTRAP_BTN_STYLE = "primary"
     BOOTSTRAP_BTN_SIZE = "sm"
     SECRET_KEY = os.environ.get("FLASK_SECRET_KEY") or "dev"
+    DEMO_MODE = os.environ.get("DEMO_MODE", "").lower() == "true"

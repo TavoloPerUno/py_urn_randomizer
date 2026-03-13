@@ -1,11 +1,10 @@
 """CLI for urn-randomization package"""
 
-import sys
 import click
 from confuse import exceptions as ce
 
-from urand.config import config
 from urand import Study
+from urand.config import config
 
 
 @click.group()
