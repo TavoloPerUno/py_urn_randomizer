@@ -31,6 +31,11 @@ class Study:
         self.urn_selection = db.get_param(config, self.session, "urn_selection")
         self.treatments = json.loads(db.get_param(config, self.session, "treatments"))
         self.factors = json.loads(db.get_param(config, self.session, "factors"))
+        try:
+            target = db.get_param(config, self.session, "target_enrollment")
+            self.target_enrollment = int(target) if target else None
+        except (AttributeError, ValueError):
+            self.target_enrollment = None
 
     def get_bg_state(self):
         """Returns last state of NumPy BitGenerator

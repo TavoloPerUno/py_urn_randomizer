@@ -12,38 +12,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="manifest" href="../static/favicon_io/site.webmanifest">
     {{ bootstrap.load_css() }}
+    {% block extra_stylesheets %}{% endblock %}
     <style>
-        pre {
-            background: #ddd;
-            padding: 10px;
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.08);
+        }
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        main.container {
+            max-width: 1400px;
+        }
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.12);
         }
         h2 {
-            margin-top: 20px;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        pre {
+            background: #e9ecef;
+            padding: 12px;
+            border-radius: 6px;
         }
         footer {
-            margin: 20px;
+            margin: 24px 0;
+            color: #6c757d;
+            font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
     {{ render_messages(container=False, dismissible=True) }}
     {% if current_user.is_authenticated %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">Urn Randomizer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav me-auto">
                     {{ render_nav_item('list_participants', 'Participants', use_li=True) }}
                     {{ render_nav_item('randomize_participant', 'Randomize Participant', use_li=True) }}
                 </ul>
-                <ul class="navbar-nav ml-auto">
-                    <a class="p-2 text-dark" href="/logout">Logout</a>
+                <ul class="navbar-nav ms-auto">
+                    <a class="nav-link text-muted" href="/logout">Logout</a>
                 </ul>
-
             </div>
+        </div>
     </nav>
     {% else %}
     <section class="vh-100" style="background-color: #350E20FF;">
@@ -66,17 +92,16 @@
 
     {% if current_user.is_authenticated %}
     <main class="container">
-
         {% block content %}{% endblock %}
     </main>
     {% endif %}
 
     <footer class="text-center">
         {% block footer %}
-
         {% endblock %}
     </footer>
 
     {{ bootstrap.load_js() }}
+    {% block extra_javascripts %}{% endblock %}
 </body>
 </html>

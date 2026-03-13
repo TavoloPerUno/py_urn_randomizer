@@ -1,4 +1,4 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
 {% from 'bootstrap/nav.html' import render_nav_item, render_breadcrumb_item %}
 
 {% block extra_stylesheets %}
@@ -6,57 +6,130 @@
   <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <style>
+    .dashboard-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.12);
+        margin-bottom: 1.5rem;
+    }
+    .stat-card {
+        text-align: center;
+        padding: 1.25rem;
+    }
+    .stat-card .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+    .stat-card .stat-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.25rem;
+    }
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e9ecef;
+    }
+    .progress-thick {
+        height: 1.5rem;
+        border-radius: 0.5rem;
+        background-color: #e9ecef;
+    }
+    .progress-thick .progress-bar {
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        line-height: 1.5rem;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid px-0">
+  <!-- Page title -->
+  <h2 class="text-center mb-4">Treatment Assignments in {{ project }}</h2>
+
+  <!-- Summary stats -->
+  <div class="row g-3 mb-4">
+    {% for trt in treatments %}
     <div class="col">
-    <h2 align="center">Treatment Assignments in {{ project }}</h2>
+      <div class="dashboard-card stat-card">
+        <div class="stat-value">{{ trt_counts.get(trt, 0) }}</div>
+        <div class="stat-label">{{ trt }}</div>
+      </div>
+    </div>
+    {% endfor %}
+    <div class="col">
+      <div class="dashboard-card stat-card">
+        <div class="stat-value">{{ total_participants }}</div>
+        <div class="stat-label">Total</div>
+      </div>
     </div>
   </div>
-    <div class="row gy-3">
-      <div class="col">
-    {{ div_plt | safe }}
+
+  <!-- Enrollment progress -->
+  {% if target_enrollment %}
+  {% set pct = (total_participants * 100 / target_enrollment) | round(1) %}
+  <div class="dashboard-card">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="section-title mb-0 pb-0" style="border-bottom: none;">Enrollment Progress</div>
+      <span class="text-muted">{{ total_participants }} / {{ target_enrollment }} participants ({{ pct }}%)</span>
+    </div>
+    <div class="progress progress-thick">
+      <div class="progress-bar {% if pct >= 100 %}bg-success{% elif pct >= 75 %}bg-primary{% elif pct >= 50 %}bg-info{% else %}bg-warning{% endif %}"
+           role="progressbar"
+           style="width: {{ [pct, 100] | min }}%"
+           aria-valuenow="{{ total_participants }}"
+           aria-valuemin="0"
+           aria-valuemax="{{ target_enrollment }}">
+        {{ pct }}%
       </div>
-        <div class="w-100"></div>
-        <div class="col">
-      <hr/>
     </div>
-    </div>
-<!--    <div class="row">-->
-<!--      <div class="col">-->
-<!--      <hr/>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--  <div class="row">-->
-<!--    <br/>-->
-<!--    <br/>-->
-<!--    <hr/>-->
-<!--  <h2 align="center">Randomized participants</h2>-->
-<!--  </div>-->
-  <div class="row">
-<!--        <br/>-->
-<!--    <br/>-->
-    <div class="col">
-    <h2 align="center">Randomized participants</h2>
-    <div class="col-lg-12">
-      <table id="tbl_participant" class="display compact nowrap" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            {% for colname in colnames %}
-                <th>{{ colname }}</th>
-              {% endfor %}
-          </tr>
-        </thead>
+  </div>
+  {% endif %}
+
+  <!-- Charts -->
+  <div class="dashboard-card">
+    <div class="section-title">Assignment Overview</div>
+    {{ div_plt | safe }}
+  </div>
+
+  <!-- Enrollment timeline -->
+  {% if div_timeline %}
+  <div class="dashboard-card">
+    <div class="section-title">Enrollment Timeline</div>
+    {{ div_timeline | safe }}
+    {{ script_timeline | safe }}
+  </div>
+  {% endif %}
+
+  <!-- Participant table -->
+  <div class="dashboard-card">
+    <div class="section-title">Randomized Participants</div>
+    <table id="tbl_participant" class="display compact nowrap" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          {% for colname in colnames %}
+            <th>{{ colname }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
       <tbody></tbody>
     </table>
   </div>
-    </div>
 </div>
-  </div>
+
 {{ script_plt | safe }}
 {{ js_resources|indent(4)|safe }}
 {{ css_resources|indent(4)|safe }}
@@ -79,8 +152,8 @@
         "scrollX": true,
         "processing": true,
         "serverSide": true,
-        lengthMenu: [[5, 10], [5, 10]],
-        pageLength: 5,
+        lengthMenu: [[5, 10, 25], [5, 10, 25]],
+        pageLength: 10,
         "ajax": "{{ url_for('dtbl_participants') }}",
         dom: 'Blfrtip',
         buttons: [

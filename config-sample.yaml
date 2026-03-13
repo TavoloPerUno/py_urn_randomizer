@@ -15,6 +15,7 @@
 "Example Study":
 
     starting_seed: 100
+    # target_enrollment: 200  # Optional: total planned enrollment target
     treatments:
         - Treatment A
         - Treatment B

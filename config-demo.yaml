@@ -2,6 +2,7 @@ db: sqlite:///demo.db
 
 "Demo Study":
     starting_seed: 42
+    target_enrollment: 90
     treatments:
         - Drug A
         - Drug B

@@ -527,13 +527,22 @@ def list_participants():
         js_resources,
         css_resources,
     ) = plot_utils.plt_factor_treatment_assignments(study)
+    script_timeline, div_timeline = plot_utils.plt_enrollment_timeline(study)
+    pdf_history = study.export_history()
+    trt_counts = pdf_history.groupby("trt").size().to_dict() if len(pdf_history) else {}
     return render_template(
         "tbl_participant.html",
         project=study.study_name,
         div_plt=div_plt,
         script_plt=script_plt,
+        script_timeline=script_timeline,
+        div_timeline=div_timeline,
         js_resources=js_resources,
         css_resources=css_resources,
+        treatments=study.treatments,
+        trt_counts=trt_counts,
+        total_participants=len(pdf_history),
+        target_enrollment=study.target_enrollment,
         colnames=[
             c.info.get("label", c.name)
             for c in study.participant.__table__.columns

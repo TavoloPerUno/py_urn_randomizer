@@ -147,6 +147,11 @@ def populate_config(study_name, config_tbl, session):
             )
             raise
 
+        try:
+            target_enrollment = config[study_name]["target_enrollment"].get(int)
+        except (NotFoundError, KeyError):
+            target_enrollment = null()
+
         session.add_all(
             [
                 config_tbl(param="w", value=w),
@@ -157,6 +162,7 @@ def populate_config(study_name, config_tbl, session):
                 config_tbl(param="urn_selection", value=urn_selection),
                 config_tbl(param="treatments", value=json.dumps(treatments)),
                 config_tbl(param="factors", value=json.dumps(factors)),
+                config_tbl(param="target_enrollment", value=target_enrollment),
             ]
         )
 

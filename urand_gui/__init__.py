@@ -115,4 +115,19 @@ def init_demo():
         trt = participant["trt"].values[0]
         click.echo(f"Participant {i} randomized to {trt}")
 
-    click.echo(f"Demo seeding complete. {num_participants} participants processed.")
+    # Spread randomization dates over several months for realistic timeline
+    from datetime import datetime, timedelta, timezone
+
+    base_date = datetime(2025, 9, 1, 9, 0, 0, tzinfo=timezone.utc)
+    participant_tbl = study.participant
+    all_rows = study.session.query(participant_tbl).order_by(participant_tbl.id).all()
+    for idx, row in enumerate(all_rows):
+        # Spread over ~6 months with slight randomness
+        days_offset = int(idx * 7.5 + rng.randint(0, 5))
+        new_dt = base_date + timedelta(days=days_offset)
+        row.datetime = new_dt
+    study.session.commit()
+    click.echo(
+        f"Demo seeding complete. {num_participants} participants processed "
+        f"with dates spread from {base_date.date()} onward."
+    )

@@ -1,14 +1,17 @@
 import itertools
 
+import pandas as pd
 from bokeh.embed import components
 from bokeh.layouts import column, row
 from bokeh.models import (
     CDSView,
     ColumnDataSource,
+    DatetimeTickFormatter,
     FactorRange,
     GroupFilter,
     HoverTool,
     Legend,
+    NumeralTickFormatter,
     Paragraph,
     Select,
 )
@@ -60,7 +63,7 @@ def plot_styler(p):
     p.xgrid.grid_line_color = None
     p.legend.location = "top_right"
     # p.legend.orientation = "vertical"
-    p.sizing_mode = "scale_both"
+    p.sizing_mode = "stretch_width"
     p.xaxis.axis_label_text_font_size = "7pt"
     p.xaxis.major_label_text_font_size = "7pt"
     p.yaxis.axis_label_text_font_size = "7pt"
@@ -93,14 +96,13 @@ def plt_factor_treatment_assignments(study):
     tooltips_all = [("No. participants", "@n_participants")]
     p_all = figure(
         x_range=study.treatments,
-        height=200,
-        width=300,
+        height=450,
+        width=500,
         title="All participants ({0})".format(n_participants),
         toolbar_location=None,
         tools="",
         tooltips=tooltips_all,
-        sizing_mode="stretch_both",
-        height_policy="fit",
+        sizing_mode="stretch_width",
     )
     source_all = ColumnDataSource(data=pdf_all[["trt", "n_participants"]])
     p_all.add_tools(HoverTool(tooltips=[("No. participants", "@n_participants")]))
@@ -144,16 +146,15 @@ def plt_factor_treatment_assignments(study):
     view = CDSView(filter=filter)
 
     p = figure(
-        height=200,
-        width=300,
+        height=450,
+        width=500,
         title="By factor",
         toolbar_location=None,
         tools="",
         tooltips=tooltips,
         x_range=FactorRange(),
         y_range=[0, 110],
-        sizing_mode="stretch_both",
-        height_policy="fit",
+        sizing_mode="stretch_width",
     )
     p.x_range.factors = study.factors[factors[0]]
     lst_color = list(
@@ -200,13 +201,142 @@ def plt_factor_treatment_assignments(study):
     css_resources = INLINE.render_css()
     script_p, div_p = components(
         row(
-            p_all,
+            column(p_all, sizing_mode="stretch_width"),
             column(
                 row(title_select_factor, select_factor, align="end"),
-                row(p, sizing_mode="stretch_both", height_policy="fit"),
+                p,
+                sizing_mode="stretch_width",
             ),
-            sizing_mode="stretch_both",
-            height_policy="fit",
+            sizing_mode="stretch_width",
         )
     )
     return script_p, div_p, js_resources, css_resources
+
+
+def plt_enrollment_timeline(study):
+    """Cumulative enrollment over time, broken down by treatment arm."""
+    pdf = study.export_history()
+    if len(pdf) == 0:
+        return "", ""
+
+    pdf = pdf.sort_values("datetime")
+    pdf["datetime"] = pd.to_datetime(pdf["datetime"], utc=True)
+
+    lst_color = list(
+        itertools.islice(itertools.cycle(bokeh_palette), len(study.treatments))
+    )
+    color_map = dict(zip(study.treatments, lst_color))
+
+    # --- Cumulative enrollment by treatment ---
+    p_enroll = figure(
+        height=300,
+        width=700,
+        title="Cumulative Enrollment",
+        x_axis_type="datetime",
+        toolbar_location=None,
+        tools="",
+        sizing_mode="stretch_width",
+    )
+    legend_items = []
+    for trt in study.treatments:
+        pdf_trt = pdf[pdf["trt"] == trt].copy()
+        pdf_trt["cumcount"] = range(1, len(pdf_trt) + 1)
+        src = ColumnDataSource(
+            data={"datetime": pdf_trt["datetime"], "cumcount": pdf_trt["cumcount"]}
+        )
+        line = p_enroll.line(
+            "datetime",
+            "cumcount",
+            source=src,
+            line_width=2,
+            color=color_map[trt],
+            alpha=0.8,
+        )
+        p_enroll.scatter(
+            "datetime",
+            "cumcount",
+            source=src,
+            size=5,
+            color=color_map[trt],
+            alpha=0.8,
+        )
+        legend_items.append((trt, [line]))
+
+    legend = Legend(items=legend_items, location="top_left", title="Treatments")
+    p_enroll.add_layout(legend, "right")
+    p_enroll.yaxis.axis_label = "Participants"
+    p_enroll.xaxis.axis_label = "Date"
+    p_enroll.xaxis.formatter = DatetimeTickFormatter(days="%b %d", months="%b %Y")
+    p_enroll.y_range.start = 0
+    p_enroll.xgrid.grid_line_color = None
+    p_enroll.sizing_mode = "stretch_width"
+    p_enroll.title.text_font_size = chart_title_font_size
+    p_enroll.title.text_font = chart_font
+    p_enroll.title.align = chart_title_alignment
+    p_enroll.title.text_font_style = chart_font_style_title
+    p_enroll.legend.background_fill_alpha = 0.0
+
+    # --- Imbalance ratio over time ---
+    pdf_sorted = pdf.sort_values("datetime").copy()
+    cumcounts = {}
+    ratios = []
+    datetimes = []
+    for _, row_data in pdf_sorted.iterrows():
+        trt = row_data["trt"]
+        cumcounts[trt] = cumcounts.get(trt, 0) + 1
+        counts = list(cumcounts.values())
+        max_c = max(counts)
+        min_c = min(counts)
+        total = sum(counts)
+        # Imbalance = (max - min) / total
+        ratios.append((max_c - min_c) / total if total > 0 else 0)
+        datetimes.append(row_data["datetime"])
+
+    src_imb = ColumnDataSource(data={"datetime": datetimes, "imbalance": ratios})
+    p_imbalance = figure(
+        height=300,
+        width=700,
+        title="Treatment Imbalance Over Time",
+        x_axis_type="datetime",
+        toolbar_location=None,
+        tools="",
+        sizing_mode="stretch_width",
+    )
+    p_imbalance.line(
+        "datetime",
+        "imbalance",
+        source=src_imb,
+        line_width=2,
+        color="#e74c3c",
+        alpha=0.8,
+    )
+    p_imbalance.scatter(
+        "datetime",
+        "imbalance",
+        source=src_imb,
+        size=5,
+        color="#e74c3c",
+        alpha=0.8,
+    )
+    p_imbalance.yaxis.axis_label = "Imbalance ratio"
+    p_imbalance.xaxis.axis_label = "Date"
+    p_imbalance.xaxis.formatter = DatetimeTickFormatter(days="%b %d", months="%b %Y")
+    p_imbalance.yaxis.formatter = NumeralTickFormatter(format="0.0%")
+    p_imbalance.y_range.start = 0
+    p_imbalance.xgrid.grid_line_color = None
+    p_imbalance.sizing_mode = "stretch_width"
+    p_imbalance.title.text_font_size = chart_title_font_size
+    p_imbalance.title.text_font = chart_font
+    p_imbalance.title.align = chart_title_alignment
+    p_imbalance.title.text_font_style = chart_font_style_title
+
+    add_tooltip = HoverTool(
+        tooltips=[("Date", "@datetime{%b %d, %Y}"), ("Imbalance", "@imbalance{0.1%}")],
+        formatters={"@datetime": "datetime"},
+    )
+    p_imbalance.add_tools(add_tooltip)
+
+    script_timeline, div_timeline = components(
+        row(p_enroll, p_imbalance, sizing_mode="stretch_width")
+    )
+    return script_timeline, div_timeline
