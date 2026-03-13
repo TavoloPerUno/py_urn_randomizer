@@ -109,11 +109,11 @@ How Urn Randomization Works
 ---------------------------
 
 The urn randomization scheme (Wei, 1978) maintains a set of urns — one per
-stratum defined by the combination of factor levels. Each urn contains colored
-balls representing treatment arms.
+factor-level pair (e.g., one urn for ``sex=Male``, another for ``age_group=65+``).
+Each urn contains colored balls representing treatment arms.
 
-1. When a new participant arrives, their factor levels are matched to urns —
-   one urn per factor-level combination.
+1. When a new participant arrives, their factor levels identify the relevant
+   urns — one urn per factor-level pair.
 2. An imbalance score *d* is computed for each matched urn using the configured
    measure (``D``).
 3. The urn with the highest imbalance is selected (``urn_selection`` method).

@@ -44,7 +44,7 @@ Get Study Configuration
        "beta": 1,
        "w": 1
      },
-     "status_code": 200
+     "status": 200
    }
 
 List Participants
@@ -84,14 +84,14 @@ Randomize a Participant
        "sex": "Female",
        "disease_severity": "Mild"
      }],
-     "status_code": 200
+     "status": 200
    }
 
 Error Handling
 --------------
 
 All endpoints return a JSON object with ``message``, ``results``, and
-``status_code`` fields. Common error codes:
+``status`` fields. Common error codes:
 
 .. list-table::
    :header-rows: 1
