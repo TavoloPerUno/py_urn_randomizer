@@ -20,6 +20,29 @@ a Flask web GUI, a REST API, and a command-line interface.
 - **Reproducible RNG** via NumPy PCG64 generator
 - **SQLite storage** for portable, zero-configuration persistence
 
+## Screenshots
+
+### Randomize a participant
+
+Enter a participant ID and select prognostic factor levels. The system draws from
+the adaptive urn to assign a treatment arm while maintaining balance across strata.
+
+![Randomization form](sphinx-config/figures/randomize_frm.png)
+
+### Treatment assignment dashboard
+
+Interactive Bokeh chart showing the current distribution of participants across
+treatment arms, with a factor-level breakdown on the right.
+
+![Assignment plot](sphinx-config/figures/assgmt_plot.png)
+
+### Participant table
+
+Searchable, sortable table of all randomized participants with their factor
+levels, assigned treatment, and timestamp.
+
+![Participant table](sphinx-config/figures/assgmt_tbl.png)
+
 ## Quick Start
 
 ```bash

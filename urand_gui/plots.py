@@ -93,8 +93,8 @@ def plt_factor_treatment_assignments(study):
     tooltips_all = [("No. participants", "@n_participants")]
     p_all = figure(
         x_range=study.treatments,
-        plot_height=200,
-        plot_width=300,
+        height=200,
+        width=300,
         title="All participants ({0})".format(n_participants),
         toolbar_location=None,
         tools="",
@@ -141,11 +141,11 @@ def plt_factor_treatment_assignments(study):
     ]
     src = ColumnDataSource(data=pdf_factors)
     filter = GroupFilter(column_name="factor", group=factors[0])
-    view = CDSView(source=src, filters=[filter])
+    view = CDSView(filter=filter)
 
     p = figure(
-        plot_height=200,
-        plot_width=300,
+        height=200,
+        width=300,
         title="By factor",
         toolbar_location=None,
         tools="",
