@@ -24,9 +24,15 @@
             font-weight: 600;
             letter-spacing: -0.5px;
             color: #ffffff !important;
+            display: flex;
+            align-items: center;
         }
         .navbar-brand img {
-            margin-right: 8px;
+            margin-right: 10px;
+        }
+        .navbar .nav-link {
+            display: flex;
+            align-items: center;
         }
         main.container {
             max-width: 1400px;
@@ -76,19 +82,21 @@
     {{ render_messages(container=False, dismissible=True) }}
     {% if current_user.is_authenticated %}
     <nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background-color: #800000;">
-        <div class="container">
-            <a class="navbar-brand" href="/"><img src="../static/favicon_io/favicon-32x32.png" alt="" width="28" height="28">Urn Randomizer</a>
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/"><img src="../static/logo-white-32.png" alt="" width="28" height="28">Urn Randomizer</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav mr-auto">
                     {{ render_nav_item('list_participants', 'Participants', use_li=True) }}
                     {{ render_nav_item('randomize_participant', 'Randomize Participant', use_li=True) }}
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <a class="nav-link text-light" href="/logout">Logout</a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -102,7 +110,7 @@
           <div class="card-body p-5 text-center">
 
             <h3 class="mb-5">Randomize participants with Urn Randomization</h3>
-            <a href="{{ url_for('google.login') }}" class="btn btn-lg btn-block btn-primary" style="background-color: #800000;"><i class="fab fa-google me-2"></i> Login with Google</a>
+            <a href="{{ url_for('google.login') }}" class="btn btn-lg btn-block btn-primary" style="background-color: #800000;"><i class="fab fa-google mr-2"></i> Login with Google</a>
             </div>
         </div>
       </div>
