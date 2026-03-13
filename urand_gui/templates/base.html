@@ -18,11 +18,15 @@
             background-color: #f8f9fa;
         }
         .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,.08);
+            box-shadow: 0 2px 4px rgba(0,0,0,.15);
         }
         .navbar-brand {
             font-weight: 600;
             letter-spacing: -0.5px;
+            color: #ffffff !important;
+        }
+        .navbar-brand img {
+            margin-right: 8px;
         }
         main.container {
             max-width: 1400px;
@@ -36,7 +40,7 @@
             margin-top: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 600;
-            color: #2c3e50;
+            color: #313131;
         }
         pre {
             background: #e9ecef;
@@ -45,17 +49,35 @@
         }
         footer {
             margin: 24px 0;
-            color: #6c757d;
+            color: #58595b;
             font-size: 0.875rem;
+        }
+        .btn-primary {
+            background-color: #800000 !important;
+            border-color: #800000 !important;
+        }
+        .btn-primary:hover {
+            background-color: #600000 !important;
+            border-color: #600000 !important;
+        }
+        a {
+            color: #800000;
+        }
+        a:hover {
+            color: #600000;
+        }
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
     {{ render_messages(container=False, dismissible=True) }}
     {% if current_user.is_authenticated %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background-color: #800000;">
         <div class="container">
-            <a class="navbar-brand" href="/">Urn Randomizer</a>
+            <a class="navbar-brand" href="/"><img src="../static/favicon_io/favicon-32x32.png" alt="" width="28" height="28">Urn Randomizer</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -66,13 +88,13 @@
                     {{ render_nav_item('randomize_participant', 'Randomize Participant', use_li=True) }}
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <a class="nav-link text-muted" href="/logout">Logout</a>
+                    <a class="nav-link text-light" href="/logout">Logout</a>
                 </ul>
             </div>
         </div>
     </nav>
     {% else %}
-    <section class="vh-100" style="background-color: #350E20FF;">
+    <section class="vh-100" style="background-color: #800000;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -80,7 +102,7 @@
           <div class="card-body p-5 text-center">
 
             <h3 class="mb-5">Randomize participants with Urn Randomization</h3>
-            <a href="{{ url_for('google.login') }}" class="btn btn-lg btn-block btn-primary" style="background-color: #155F83FF;"><i class="fab fa-google me-2"></i> Login with Google</a>
+            <a href="{{ url_for('google.login') }}" class="btn btn-lg btn-block btn-primary" style="background-color: #800000;"><i class="fab fa-google me-2"></i> Login with Google</a>
             </div>
         </div>
       </div>

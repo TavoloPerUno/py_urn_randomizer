@@ -122,19 +122,20 @@ def init_demo():
     num_participants = 25
 
     for i in range(num_participants):
-        if study.get_participant(str(i)).shape[0] > 0:
-            click.echo(f"Participant {i} already exists, skipping.")
+        pid = f"P{i + 1:03d}"
+        if study.get_participant(pid).shape[0] > 0:
+            click.echo(f"Participant {pid} already exists, skipping.")
             continue
 
-        row = {"id": str(i), "user": "demo"}
+        row = {"id": pid, "user": "demo"}
         for factor, levels in factors.items():
             row["f_" + factor] = rng.choice(levels)
 
         df = pd.DataFrame(row, index=[0])
         study.upload_new_participants(pdf=df)
-        participant = study.get_participant(str(i))
+        participant = study.get_participant(pid)
         trt = participant["trt"].values[0]
-        click.echo(f"Participant {i} randomized to {trt}")
+        click.echo(f"Participant {pid} randomized to {trt}")
 
     # Spread randomization dates over several months for realistic timeline
     from datetime import datetime, timedelta, timezone

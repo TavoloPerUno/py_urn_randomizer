@@ -22,11 +22,11 @@
     .stat-card .stat-value {
         font-size: 2rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: #800000;
     }
     .stat-card .stat-label {
         font-size: 0.85rem;
-        color: #6c757d;
+        color: #58595b;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-top: 0.25rem;
@@ -34,12 +34,12 @@
     .section-title {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #6c757d;
+        color: #800000;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 1rem;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid #e9ecef;
+        border-bottom: 2px solid #800000;
     }
     .progress-thick {
         height: 1.5rem;
@@ -87,7 +87,8 @@
       <span class="text-muted">{{ total_participants }} / {{ target_enrollment }} participants ({{ pct }}%)</span>
     </div>
     <div class="progress progress-thick">
-      <div class="progress-bar {% if pct >= 100 %}bg-success{% elif pct >= 75 %}bg-primary{% elif pct >= 50 %}bg-info{% else %}bg-warning{% endif %}"
+      <div class="progress-bar"
+           style="background-color: {% if pct >= 100 %}#7EBEC5{% else %}#800000{% endif %};"
            role="progressbar"
            style="width: {{ [pct, 100] | min }}%"
            aria-valuenow="{{ total_participants }}"
