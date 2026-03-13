@@ -28,8 +28,10 @@ setuptools.setup(
         "scipy",
         "datatables",
     ],
+    python_requires=">=3.13",
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],

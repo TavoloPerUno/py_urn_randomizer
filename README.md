@@ -1,7 +1,7 @@
 # py_urn_randomizer
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/TavoloPerUno/py_urn_randomizer/actions/workflows/lint.yml/badge.svg)](https://github.com/TavoloPerUno/py_urn_randomizer/actions/workflows/lint.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-informational.svg)](https://tavoloperuno.github.io/py_urn_randomizer/)
 
@@ -19,14 +19,6 @@ a Flask web GUI, a REST API, and a command-line interface.
 - **Plugin system** for custom randomization logic
 - **Reproducible RNG** via NumPy PCG64 generator
 - **SQLite storage** for portable, zero-configuration persistence
-
-## Screenshots
-
-![Randomization Form](sphinx-config/figures/randomize_frm.png)
-
-![Assignment Plot](sphinx-config/figures/assgmt_plot.png)
-
-![Assignment Table](sphinx-config/figures/assgmt_tbl.png)
 
 ## Quick Start
 
