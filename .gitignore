@@ -12,4 +12,6 @@ tests/data/simulations
 urn-randomization.db
 _build
 pdf
-
+*.ipynb
+notebooks/
+stepn_out/
