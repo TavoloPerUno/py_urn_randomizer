@@ -24,7 +24,28 @@ if config_file:
     urand_config.set_file(config_file)
 
 study_name = os.environ.get("URAND_STUDY_NAME", "CHS JCOIN HUB")
-study = Study(study_name)
+
+
+class _LazyStudy:
+    """Proxy that defers Study initialization until first attribute access.
+
+    This allows Sphinx autodoc and other import-time consumers to import
+    urand_gui without a valid config file or database.
+    """
+
+    def __init__(self):
+        self._study = None
+
+    def _init(self):
+        if self._study is None:
+            self._study = Study(study_name)
+        return self._study
+
+    def __getattr__(self, name):
+        return getattr(self._init(), name)
+
+
+study = _LazyStudy()
 
 app = Flask(__name__)
 app.config.from_object(FlaskConfig)

@@ -324,9 +324,9 @@ def api_randomize_participant():
         else:
             if "id" not in request.args:
                 status = 400
-                dct_data[
-                    "message"
-                ] = "Please pass the participant id with your request."
+                dct_data["message"] = (
+                    "Please pass the participant id with your request."
+                )
             if status == 200:
                 req_study = Study(request.args.get("study"))
                 lst_factors = list(req_study.factors.keys())
@@ -560,9 +560,11 @@ def dtbl_participants():
         ColumnDT(
             study.participant.__dict__[col],
             column_name=col,
-            search_method="numeric"
-            if col in lst_numeric_col
-            else ("date" if col in lst_date_col else "string_contains"),
+            search_method=(
+                "numeric"
+                if col in lst_numeric_col
+                else ("date" if col in lst_date_col else "string_contains")
+            ),
         )
         for col in lst_col_to_add
     ]
