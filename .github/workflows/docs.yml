@@ -28,6 +28,9 @@ jobs:
           pip install sphinx sphinx-rtd-theme sphinxcontrib-httpdomain sphinx-click sphinx-autoapi rinohtype
 
       - name: Build Sphinx docs
+        env:
+          URAND_CONFIG_FILE: config-sample.yaml
+          URAND_STUDY_NAME: "Example Study"
         run: sphinx-build sphinx-config/ _build/html
 
       - name: Add .nojekyll

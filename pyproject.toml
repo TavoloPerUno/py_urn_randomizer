@@ -14,3 +14,4 @@ disable = ["C0114", "C0115", "C0116", "R0903", "R0913", "W0622"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+python_files = ["test_*.py", "tests.py"]
