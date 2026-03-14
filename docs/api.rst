@@ -55,13 +55,6 @@ List Participants
    curl -s "http://localhost:5000/study_participants?\
    api_key=YOUR_KEY&study=My+Study" | python -m json.tool
 
-Look up a specific participant:
-
-.. code-block:: bash
-
-   curl -s "http://localhost:5000/study_participants?\
-   api_key=YOUR_KEY&study=My+Study&id=P001" | python -m json.tool
-
 Randomize a Participant
 ^^^^^^^^^^^^^^^^^^^^^^^
 

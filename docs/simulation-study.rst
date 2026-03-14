@@ -89,14 +89,14 @@ Tail Probabilities
 The fraction of trials where the maximum proportional difference exceeds
 a given threshold provides a practical measure of risk:
 
-.. list-table:: Fraction of trials with d ≥ 20% (at n = 100 participants)
+.. list-table:: Fraction of trials with d ≥ 10% (at n = 100 participants)
    :header-rows: 1
    :widths: 40 30
 
    * - Strategy
-     - Trials with d ≥ 20%
+     - Trials with d ≥ 10%
    * - Complete Randomization
-     - ~35%
+     - ~47%
    * - Urn (β=1, D=χ²)
      - < 1%
    * - Urn (β=1, D=range)
@@ -104,9 +104,9 @@ a given threshold provides a practical measure of risk:
    * - Urn (β=2, D=χ²)
      - < 0.1%
 
-At 100 participants, roughly one in three completely randomized trials
-has a ≥ 20% imbalance, while urn randomization virtually eliminates
-this risk.
+At 100 participants, nearly half of completely randomized trials have
+a ≥ 10% imbalance, while urn randomization virtually eliminates this
+risk.
 
 Choice of Imbalance Metric (D)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -122,12 +122,13 @@ Key Takeaways
 1. **Urn randomization reduces imbalance** compared to complete
    randomization at every sample size, with the largest benefit at small n.
 
-2. **The benefit is automatic** — no blocking or stratification scheme
-   needs to be pre-specified. The urn adjusts continuously.
+2. **No block sizes need to be pre-specified** — unlike permuted block
+   randomization, the urn adjusts continuously without fixed block
+   lengths.
 
 3. **Higher β values** produce tighter balance but increase the
-   predictability of the next assignment. β=1 is a common practical
-   choice that balances these concerns.
+   predictability of the next assignment (Berger et al., 2003). β=1
+   is a standard default that balances these concerns.
 
 4. **Stratification multiplies the benefit** — applying urn randomization
    within each stratum (factor-level combination) maintains balance both
@@ -141,6 +142,12 @@ References
   `doi:10.1214/aos/1176344068 <https://doi.org/10.1214/aos/1176344068>`_
 
 - Wei, L.J. (1978). An Application of an Urn Model to the Design of
-  Sequential Experiments. *Journal of the American Statistical
-  Association*, 73(363), 559–563.
-  `doi:10.2307/2286597 <https://doi.org/10.2307/2286597>`_
+  Sequential Controlled Clinical Trials. *Journal of the American
+  Statistical Association*, 73(363), 559–563.
+  `doi:10.1080/01621459.1978.10480054 <https://doi.org/10.1080/01621459.1978.10480054>`_
+
+- Berger, V.W., Ivanova, A., & Deloria-Knoll, M. (2003). Minimizing
+  predictability while retaining balance through the use of less
+  restrictive randomization procedures. *Statistics in Medicine*,
+  22(19), 3017–3028.
+  `doi:10.1002/sim.1538 <https://doi.org/10.1002/sim.1538>`_

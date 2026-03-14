@@ -312,8 +312,8 @@ class Study:
 
         1. Calculate d (level of imbalance) for all urns matching participant's
            characteristics
-        2. Pick the urn with the least imbalance (ties are broken with random
-           selection) with probability p_l as per urn_selection method
+        2. Pick the urn with the greatest imbalance (ties are broken with
+           random selection) as per urn_selection method
         3. Randomly pick one of the treatment balls, k_i, in the selected urn
         4. Participant assigned to the treatment type represented by the ball
         """
