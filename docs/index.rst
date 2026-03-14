@@ -1,6 +1,10 @@
 Urn Randomizer
 ==============
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.19023651.svg
+   :target: https://doi.org/10.5281/zenodo.19023651
+   :alt: DOI
+
 A clinical trial urn randomization system implementing the adaptive biased coin
 design described by `Wei (1978) <https://doi.org/10.1214/aos/1176344068>`_.
 The system ensures treatment-group balance according to one or more prognostic
@@ -48,6 +52,20 @@ and a **command-line interface**.
 
       Manage users, randomize participants, and export data from the terminal.
 
+   .. grid-item-card:: Plugin System
+      :link: plugins
+      :link-type: doc
+
+      Customize assignment logic with Python plugins that run after each
+      urn draw.
+
+   .. grid-item-card:: Reproducibility
+      :link: reproducibility
+      :link-type: doc
+
+      How seed management and the PCG64 generator ensure deterministic,
+      auditable assignment sequences.
+
    .. grid-item-card:: Why Urn Randomization?
       :link: simulation-study
       :link-type: doc
@@ -82,6 +100,8 @@ Key Features
    quickstart
    overview
    configuration
+   plugins
+   reproducibility
    simulation-study
 
 .. toctree::
@@ -100,3 +120,4 @@ Key Features
 
    deployment
    changelog
+   glossary

@@ -39,6 +39,13 @@ Two interactive Bokeh charts provide a visual breakdown:
 - **By factor** — a stacked bar chart that can be filtered by any prognostic
   factor using the dropdown selector.
 
+.. figure:: figures/assgmt_plot.png
+   :alt: Assignment overview chart
+   :align: center
+   :width: 80%
+
+   Treatment assignment counts across strata.
+
 Enrollment Timeline
 ^^^^^^^^^^^^^^^^^^^
 
@@ -56,6 +63,13 @@ A searchable, sortable DataTable lists every randomized participant with their
 factor levels, assigned treatment, and timestamp. Use the Excel button to
 export the full dataset.
 
+.. figure:: figures/assgmt_tbl.png
+   :alt: Participant assignment table
+   :align: center
+   :width: 80%
+
+   The participant table with factor levels, treatment, and timestamps.
+
 Randomizing a Participant
 -------------------------
 
@@ -69,6 +83,13 @@ ID and select the appropriate level for each prognostic factor, then click
    :width: 70%
 
    Enter factor levels and submit to receive a treatment assignment.
+
+.. figure:: figures/randomize_frm.png
+   :alt: Completed randomization form
+   :align: center
+   :width: 70%
+
+   A completed form showing the treatment assignment result.
 
 The assigned treatment arm is displayed as a flash message at the top of the
 page, and the participant appears immediately in the dashboard table.
