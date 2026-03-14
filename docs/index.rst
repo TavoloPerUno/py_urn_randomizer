@@ -14,7 +14,7 @@ and a **command-line interface**.
 
 |
 
-.. grid:: 2
+.. grid:: 3
    :gutter: 3
 
    .. grid-item-card:: Getting Started
@@ -36,11 +36,24 @@ and a **command-line interface**.
 
       Integrate randomization into existing platforms using the HTTP API.
 
+   .. grid-item-card:: Python API Examples
+      :link: api-examples
+      :link-type: doc
+
+      Step-by-step Python examples for querying, randomizing, and batch operations.
+
    .. grid-item-card:: CLI Reference
       :link: cli
       :link-type: doc
 
       Manage users, randomize participants, and export data from the terminal.
+
+   .. grid-item-card:: Why Urn Randomization?
+      :link: simulation-study
+      :link-type: doc
+
+      Monte Carlo evidence showing how urn randomization reduces treatment
+      imbalance compared to complete randomization.
 
 
 Key Features
@@ -69,6 +82,7 @@ Key Features
    quickstart
    overview
    configuration
+   simulation-study
 
 .. toctree::
    :maxdepth: 2
@@ -76,6 +90,7 @@ Key Features
    :hidden:
 
    api
+   api-examples
    cli
 
 .. toctree::
