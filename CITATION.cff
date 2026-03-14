@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "py_urn_randomizer"
+abstract: "A clinical trial urn randomization system (Wei 1978) with a Flask GUI, REST API, and CLI."
+authors:
+  - name: "Research Computing Group, Biostatistics Laboratory, The University of Chicago"
+version: "0.0.1"
+date-released: 2024-01-01
+license: Apache-2.0
+repository-code: "https://github.com/TavoloPerUno/py_urn_randomizer"
+keywords:
+  - clinical-trials
+  - randomization
+  - urn-randomization
+  - flask
+  - python
+  - biostatistics
+references:
+  - type: article
+    authors:
+      - family-names: Wei
+        given-names: L. J.
+    title: "The adaptive biased coin design for sequential experiments"
+    journal: "The Annals of Statistics"
+    volume: 6
+    issue: 1
+    start: 92
+    end: 100
+    year: 1978
+    doi: "10.1214/aos/1176344068"
