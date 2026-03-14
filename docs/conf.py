@@ -19,6 +19,8 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx_click.ext",
     "sphinx_design",
+    "sphinx_sitemap",
+    "sphinxext.opengraph",
 ]
 
 templates_path = ["_templates"]
@@ -62,3 +64,30 @@ numfig = True
 
 # Suppress warnings about missing references in autoflask
 suppress_warnings = ["ref.any"]
+
+# --- Sitemap ---
+html_baseurl = "https://tavoloperuno.github.io/py_urn_randomizer/"
+sitemap_url_scheme = "{link}"
+
+# --- robots.txt ---
+html_extra_path = ["_static/robots.txt"]
+
+# --- SEO meta tags ---
+html_meta = {
+    "description": (
+        "Urn Randomizer — a clinical trial urn randomization system "
+        "implementing the adaptive biased coin design by Wei (1978), "
+        "with a Flask web GUI, REST API, and CLI."
+    ),
+    "keywords": (
+        "urn randomization, clinical trials, adaptive biased coin, "
+        "treatment allocation, stratified randomization, Flask, "
+        "Wei 1978, biostatistics, RCT"
+    ),
+}
+
+# --- Open Graph (social sharing) ---
+ogp_site_url = "https://tavoloperuno.github.io/py_urn_randomizer/"
+ogp_site_name = "Urn Randomizer"
+ogp_description_length = 200
+ogp_type = "website"
