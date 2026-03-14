@@ -29,14 +29,14 @@ Real-time overview showing enrollment progress against target, treatment arm
 counts, assignment distribution by prognostic factor, cumulative enrollment
 timeline, and treatment imbalance over time.
 
-![Dashboard](sphinx-config/figures/assgmt_plot.png)
+![Dashboard](docs/figures/assgmt_plot.png)
 
 ### Randomize a participant
 
 Enter a participant ID and select prognostic factor levels. The system draws from
 the adaptive urn to assign a treatment arm while maintaining balance across strata.
 
-![Randomization form](sphinx-config/figures/randomize_frm.png)
+![Randomization form](docs/figures/randomize_frm.png)
 
 ## Quick Start
 

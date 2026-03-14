@@ -32,7 +32,7 @@ jobs:
         env:
           URAND_CONFIG_FILE: config-sample.yaml
           URAND_STUDY_NAME: "Example Study"
-        run: sphinx-build sphinx-config/ _build/html
+        run: sphinx-build docs/ _build/html
 
       - name: Add .nojekyll
         run: touch _build/html/.nojekyll

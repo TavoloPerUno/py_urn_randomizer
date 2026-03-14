@@ -1,16 +1,37 @@
-.idea
+# IDE / Editor
+.idea/
+.vscode/
+.tm_properties
+*.swp
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Environment
 .env
+
+# Python
 __pycache__/
 *.pyc
-.ipynb_checkpoints
+*.pyo
 *.egg-info/
 /build
 /dist
-**/*.db
-_build
-pdf
+
+# Jupyter
+.ipynb_checkpoints/
 *.ipynb
 notebooks/
+
+# Database
+**/*.db
+
+# Sphinx build output
+_build/
+
+# Project-specific
+pdf/
 stepn_out/
-tests/data/simulations
+tests/data/simulations/
+instance/
